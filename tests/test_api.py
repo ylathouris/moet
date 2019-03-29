@@ -1,3 +1,9 @@
+"""
+Test API
+
+This module contains tests for the moet API.
+"""
+
 from hypothesis import given
 from hypothesis.strategies import integers
 import pytest
@@ -66,3 +72,15 @@ def test_create_tower__with_n_rows__returns_expected_hierarchy(rows):
         # Now that we've finished processing the current row, we can
         # use it as the next set of parents.
         parents = row
+
+
+@pytest.mark.xfail(raises=NotImplementedError)
+def test_create_glass__returns_expected_value():
+    """
+    Test creating a glass.
+
+    This test demonstrates how to create a glass. It is also used
+    to verify the initial values of the glass properties.
+    """
+    glass = moet.create_glass()
+    assert glass.position is None
