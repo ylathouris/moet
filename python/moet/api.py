@@ -4,9 +4,11 @@ API
 This module contains the API for moet.
 """
 
+import inspect
+
 
 def create_tower(rows=4):
-    """
+    r"""
     Create a tower of glasses.
 
     This function is used to create a tower of glasses with the given
@@ -27,8 +29,66 @@ def create_tower(rows=4):
     raise NotImplementedError("This function is not currently supported")
 
 
-def create_glass():
+def create_glass(uid):
     """
     Create a glass.
+
+    Args:
+        uid (str): A unique identifier for the glass.
+
+    Returns:
+        Glass: A new glass
     """
-    raise NotImplementedError("This function is not currently supported")
+    glass = Glass(uid)
+    return glass
+
+
+class Glass:
+    """
+    Glass.
+
+    The `glass` object represents a glass.
+    """
+
+    def __init__(self, uid):
+        """
+        Initialize glass with the given code.
+
+        Args:
+            uid (str): Glass code
+        """
+        self.uid = uid
+        self.position = None
+
+    def __repr__(self):
+        """
+        Get object representation.
+
+        Returns:
+             str: Object representation.
+        """
+        mod = inspect.getmodule(self).__name__
+        cls = self.__class__.__name__
+        address = hex(id(self))
+        return f"<{mod}.{cls}(uid={self.uid}, pos={self.position}) at {address}>"
+
+    def __str__(self):
+        """
+        Get string representation.
+
+        Returns:
+            str: String representation.
+        """
+        return self.uid
+
+
+class Tower:
+    """
+    Tower
+
+    This class represents a tower of glasses which can be filled
+    with champagne (or any other form liquid).
+    """
+
+    def __init__(self):
+        """Initialize tower"""
