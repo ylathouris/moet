@@ -11,7 +11,7 @@ readme = open(os.path.join(root, "README.md")).read()
 setup(
     name="moet",
     version="0.1.0",
-    description="Something you wouldn't recognise. It's called love.",
+    description="Build a tower of glasses. Fill them with champagne!",
     long_description=readme,
     long_description_content_type="text/markdown",
     url="https://github.com/ylathouris/moet",
@@ -28,7 +28,6 @@ setup(
     python_requires=">=3.7, <4",
     keywords="io, load, dump, read, write, parse, format, utils",
     project_urls={
-        #"Documentation": ",
         "Say Thanks!": "http://saythanks.io/to/ylathouris",
         "Source": "https://github.com/ylathouris/moet",
         "Tracker": "https://github.com/ylathouris/moet/issues",
