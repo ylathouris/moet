@@ -214,3 +214,12 @@ class Tower:
             return self._graph.successors(glass)
         except networkx.NetworkXError as error:
             raise ValueError(str(error))
+
+    def fill(self, liquid_in_millilitres):
+        """
+        Pour the given amount of liquid (millilitres) over the tower.
+
+        Args:
+            liquid_in_millilitres (int or float): Liquid (millilitres)
+        """
+        raise NotImplementedError("This method is not currently supported")

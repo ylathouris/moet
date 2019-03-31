@@ -195,3 +195,25 @@ def test_get_edges__for_nonexistent_glass__raises_value_error():
     # Check children
     with pytest.raises(ValueError):
         tower.get_children("Z")
+
+
+@given(
+    rows=integers(min_value=4, max_value=6),
+    litres=integers(min_value=0, max_value=5000),
+)
+def test_fill_tower__with_valid__returns_expected_liquid_in_glasses(rows, litres):
+    """
+    Test pouring liquid into a tower of glasses.
+
+    This test demonstrates how to pour liquid into a tower of
+    glasses. In this scenario, we're only using valid amounts of
+    liquid. The test then verifies that the amount of liquid in each
+    glass is as expected.
+
+    Args:
+        rows (int): The number of rows in the tower.
+        litres (int): The amount of liquid to be poured.
+    """
+    with pytest.raises(NotImplementedError):
+        tower = moet.create_tower(rows)
+        tower.fill(litres)

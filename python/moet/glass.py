@@ -109,4 +109,12 @@ class Glass:
         Returns:
             float: Overflowing liquid (millilitres)
         """
-        raise NotImplementedError("This method is currently unsupported!")
+        overflow = 0.0
+
+        if liquid_in_millilitres > self.capacity:
+            self.millilitres = self.capacity
+            overflow = liquid_in_millilitres - self.capacity
+        else:
+            self.millilitres = liquid_in_millilitres
+
+        return overflow
