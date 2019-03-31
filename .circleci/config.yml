@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  toxify:
+    docker:
+      - image: python:3.7
+
+    working_directory: ~/moet
+
+    steps:
+      - checkout
+
+      - run:
+          name: run tests
+          command: pip install tox && tox
+
+workflows:
+  version: 2
+
+  bio:
+    jobs:
+      - toxify
