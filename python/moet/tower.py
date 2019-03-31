@@ -9,6 +9,7 @@ import math
 
 import networkx
 
+from .glass import create_glass
 from . import utils
 
 
@@ -31,7 +32,13 @@ def create_tower(rows=4):
     Args:
         rows (int): Number of rows in the tower of glasses.
     """
-    raise NotImplementedError("This function is not currently supported")
+    tower = Tower()
+    count = utils.get_triangular_value(rows)
+    for index in range(count):
+        glass = create_glass(utils.get_id(index))
+        tower.add_glass(glass)
+
+    return tower
 
 
 class Tower:
@@ -87,6 +94,7 @@ class Tower:
         """
         glass.position = self.get_next_position()
         self._graph.add_node(glass)
+        self._set_overflow_dependencies(glass)
 
     def get_row_count(self):
         """
@@ -134,3 +142,75 @@ class Tower:
             column = previous_column + 1
 
         return row, column
+
+    def _set_overflow_dependencies(self, glass):
+        """
+        Set the overflow dependencies for the hew glass.
+
+        This method is used to determine how the new glass is affected
+        by overflowing liquid from higher up in the tower.
+
+        Args:
+            glass (Glass): New glass
+        """
+        rows = list(self.get_rows())
+        row, column = glass.position
+
+        # If the glass being added is the first glass. It has no
+        # parents. Just return.
+        if row == 0:
+            return
+
+        # If the glass is at the beginning of the row, it will
+        # only receive overflowing liquid from one parent.
+        previous_row = rows[row - 1]
+        if column == 0:
+            start = 0
+            end = 1
+
+        # Similarly, if the glass is at the end of the row, it
+        # will only receive overflowing liquid from one parent.
+        elif column == row:
+            start = len(previous_row) - 1
+            end = len(previous_row)
+
+        # Finally, if the glass in somewhere in the middle of
+        # the row, it will receive overflowing liquid from two
+        # parents.
+        else:
+            start = column - 1
+            end = start + 2
+
+        parents = previous_row[start:end]
+        for parent in parents:
+            self._graph.add_edge(parent, glass)
+
+    def get_parents(self, glass):
+        """
+        Get parents for the given glass
+
+        Args:
+            glass (Glass): A glass in the tower.
+
+        Returns:
+             list of Glass: Parent glasses.
+        """
+        try:
+            return self._graph.predecessors(glass)
+        except networkx.NetworkXError as error:
+            raise ValueError(str(error))
+
+    def get_children(self, glass):
+        """
+        Get parents for the given glass
+
+        Args:
+            glass (Glass): A glass in the tower.
+
+        Returns:
+             list of Glass: Parent glasses.
+        """
+        try:
+            return self._graph.successors(glass)
+        except networkx.NetworkXError as error:
+            raise ValueError(str(error))
