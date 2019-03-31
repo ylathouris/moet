@@ -4,8 +4,42 @@ Test Utilities
 This module contains tests for the moet's utility functions.
 """
 
+import string
+
+from hypothesis import given
+from hypothesis.strategies import integers
 
 import moet
+
+
+@given(integers(min_value=0, max_value=25))
+def test_get_id__with_valid_number__returns_expected_string(number):
+    """
+    Test getting an alphabetical ID.
+
+    This test demonstrates how to generate a string ID from a given
+    number. For numbers between 0 and 25, a letter of the alphabet
+    is returned. Otherwise we just return the given number as a
+    string.
+
+    Args:
+        number: Some number between 0 and 25
+    """
+    char = moet.utils.get_id(number)
+    assert char == string.ascii_uppercase[number]
+
+
+def test_get_id__with_numbers_over_26__returns_expected_string():
+    """
+    Test getting an ID.
+
+    This test demonstrates how to generate a string ID from a given
+    number. For numbers between 0 and 25, a letter of the alphabet
+    is returned. Otherwise we just return the given number as a
+    string. In this case, we're testing with the latter.
+    """
+    id_ = moet.utils.get_id(26)
+    assert id_ == "26"
 
 
 def test_get_triangular_value__returns_expected_sequence():
@@ -34,7 +68,8 @@ def test_get_triangular_root__with_valid_numbers__returns_expected_value():
     expected = range(6)
     for index, number in enumerate(numbers):
         value = moet.utils.get_triangular_root(number)
-        assert value == expected[index]
+        assert value.is_integer()
+        assert int(value) == expected[index]
 
 
 def test_get_triangular_root__with_invalid_numbers__returns_expected_value():
@@ -48,7 +83,7 @@ def test_get_triangular_root__with_invalid_numbers__returns_expected_value():
     numbers = [2, 4, 5, 7, 8, 9, 11]
     for index, number in enumerate(numbers):
         value = moet.utils.get_triangular_root(number)
-        assert not value
+        assert not value.is_integer()
 
 
 def test_is_triangular_check__with_valid_numbers__returns_true():

@@ -5,6 +5,30 @@ This module contains moet utility functions.
 """
 
 import math
+import string
+
+
+ALPHABET = string.ascii_uppercase
+
+
+def get_id(number):
+    """
+    Get ID.
+
+    This function is used to create an ID. If the given number is
+    within the range of the alphabet, the ID returned will be nth
+    character. Otherwise a number is returned.
+
+    Args:
+        number (int): The index for a character in the alphabet.
+
+    Returns:
+        str: ID
+    """
+    if number > 25:
+        return str(number)
+    else:
+        return ALPHABET[number]
 
 
 def get_triangular_value(number):
@@ -39,10 +63,10 @@ def get_triangular_root(number):
         number (int): Some number.
 
     Returns:
-         int or None: The number of rows made from the given items.
+         float: The triangular root for the given number.
     """
     value = (math.sqrt(8 * number + 1) - 1) / 2
-    return int(value) if value.is_integer() else None
+    return value
 
 
 def is_triangular(number):
