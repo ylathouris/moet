@@ -6,6 +6,7 @@ This module contains tests for the moet API.
 
 from hypothesis import given
 from hypothesis.strategies import integers
+import pytest
 
 import moet
 
@@ -59,6 +60,18 @@ def test_add_glasses_to_tower__returns_expected_positions(number):
         for column_index, glass in enumerate(row):
             print(glass, glass.position)
             assert glass.position == (row_index, column_index)
+
+
+def test_get_glass__that_does_not_exist__returns_none():
+    """
+    Test getting a glass from a tower of glasses.
+
+    This test demonstrates the behaviour when trying to get a glass
+    that does not exist within a tower.
+    """
+    tower = moet.create_tower(4)
+    glass = tower.get_glass("Z")
+    assert glass is None
 
 
 def test_get_edges__for_root__returns_expected():
@@ -167,3 +180,18 @@ def test_get_parents__for_middle__returns_two_parents():
     # Check children
     children = tower.get_children(glass)
     assert [c.uid for c in children] == ["H", "I"]
+
+
+def test_get_edges__for_nonexistent_glass__raises_value_error():
+    """
+    Test getting the child/parent glasses for a glass that doesn't exist.
+    """
+    tower = moet.create_tower(4)
+
+    # Check parents
+    with pytest.raises(ValueError):
+        tower.get_parents("Z")
+
+    # Check children
+    with pytest.raises(ValueError):
+        tower.get_children("Z")

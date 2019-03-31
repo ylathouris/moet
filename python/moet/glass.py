@@ -38,6 +38,8 @@ class Glass:
         """
         self.uid = uid
         self.position = None
+        self._capacity = 250
+        self._millilitres = 0.0
 
     def __repr__(self):
         """
@@ -59,3 +61,52 @@ class Glass:
             str: String representation.
         """
         return self.uid
+
+    @property
+    def capacity(self):
+        """
+        Get the amount of liquid in this glass can hold (millilitres)
+
+        int or float: The amount of liquid this glass can hold (millilitres)
+        """
+        return self._capacity
+
+    @capacity.setter
+    def capacity(self, value):
+        if value < 0:
+            msg = f"Invalid value for capacity. Gor {value}, " f"expected value above 0"
+            raise ValueError(msg)
+
+        self._capacity = value
+
+    @property
+    def millilitres(self):
+        """
+        Get the amount of liquid in this glass (millilitres)
+
+        int or float: The amount of liquid in the glass (millilitres)
+        """
+        return self._millilitres
+
+    @millilitres.setter
+    def millilitres(self, value):
+        if value < 0 or value > self.capacity:
+            msg = (
+                f"Invalid value for millilitres. Gor {value}, "
+                f"expected value between 0 and {self.capacity}"
+            )
+            raise ValueError(msg)
+
+        self._millilitres = value
+
+    def fill(self, liquid_in_millilitres):
+        """
+        Fill the glass with the given amount of liquid (millilitres)
+
+        Args:
+            liquid_in_millilitres(int or float): Liquid (millilitres)
+
+        Returns:
+            float: Overflowing liquid (millilitres)
+        """
+        raise NotImplementedError("This method is currently unsupported!")
