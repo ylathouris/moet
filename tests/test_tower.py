@@ -74,35 +74,52 @@ def test_create_tower__with_n_rows__returns_expected_hierarchy(rows):
         parents = row
 
 
-def test_create_glass__returns_expected_value():
+@given(integers(min_value=1, max_value=21))
+def test_add_glasses_to_tower(number):
     """
-    Test creating a glass.
+    Test adding glasses to a tower.
 
-    This test demonstrates how to create a glass. It is also used
-    to verify the initial values of the glass properties.
+    This test demonstrates how to add glasses to a tower of
+    glasses. It then verifies that the glasses were added by
+    checking the properties of the tower.
+
+    Args:
+        number (int): The number of glasses to add to the tower.
     """
-    glass = moet.create_glass("A")
-    assert glass.uid == "A"
-    assert glass.position is None
+    tower = moet.Tower()
+
+    glasses = []
+    for index in range(number):
+        id_ = moet.utils.get_id(index)
+        glass = moet.create_glass(id_)
+        tower.add_glass(glass)
+        glasses.append(glass)
+
+    assert tower.glasses == glasses
 
 
-def test_glass_str__returns_uid():
+@given(integers(min_value=1, max_value=21))
+def test_add_glasses_to_tower__returns_expected_positions(number):
     """
-    Test the string representation of a glass.
+    Test getting the position of a glass in the tower.
 
-    This test is used to verify that the string representation
-    of a glass is the glass's unique identifier.
+    This test demonstrates how to get the position of a glass in a
+    tower of glasses.
+
+    Args:
+        number (int): The number of glasses to add to the tower
     """
-    glass = moet.create_glass("A")
-    assert str(glass) == glass.uid
+    tower = moet.Tower()
 
+    # Add glasses
+    for index in range(number):
+        id_ = moet.utils.get_id(index)
+        glass = moet.create_glass(id_)
+        tower.add_glass(glass)
 
-def test_glass_repr__returns_expected_value():
-    """
-    Test the object representation of a glass.
-
-    This test is used to verify that the object representation
-    of a glass contains the expected information (i.e. uid and position).
-    """
-    glass = moet.create_glass("A")
-    assert "moet.api.Glass(uid=A, pos=None)" in repr(glass)
+    # Check positions.
+    rows = list(tower.get_rows())
+    for row_index, row in enumerate(rows):
+        for column_index, glass in enumerate(row):
+            print(glass, glass.position)
+            assert glass.position == (row_index, column_index)
