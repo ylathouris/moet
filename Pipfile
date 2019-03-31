@@ -9,8 +9,10 @@ pytest-cov = "*"
 coverage-badge = "*"
 black = "*"
 hypothesis = "*"
+moet = {editable = true,path = "."}
 
 [packages]
+networkx = "*"
 
 [requires]
 python_version = "3.7"
