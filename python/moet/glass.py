@@ -38,8 +38,8 @@ class Glass:
         """
         self.uid = uid
         self.position = None
-        self._capacity = 250
-        self._millilitres = 0.0
+        self._capacity = 250.0
+        self._quantity = 0.0
 
     def __repr__(self):
         """
@@ -80,24 +80,24 @@ class Glass:
         self._capacity = value
 
     @property
-    def millilitres(self):
+    def quantity(self):
         """
         Get the amount of liquid in this glass (millilitres)
 
         int or float: The amount of liquid in the glass (millilitres)
         """
-        return self._millilitres
+        return self._quantity
 
-    @millilitres.setter
-    def millilitres(self, value):
+    @quantity.setter
+    def quantity(self, value):
         if value < 0 or value > self.capacity:
             msg = (
-                f"Invalid value for millilitres. Gor {value}, "
+                f"Invalid quantity of liquid. Got {value}, "
                 f"expected value between 0 and {self.capacity}"
             )
             raise ValueError(msg)
 
-        self._millilitres = value
+        self._quantity = value
 
     def fill(self, liquid_in_millilitres):
         """
@@ -111,10 +111,11 @@ class Glass:
         """
         overflow = 0.0
 
-        if liquid_in_millilitres > self.capacity:
-            self.millilitres = self.capacity
-            overflow = liquid_in_millilitres - self.capacity
+        value = self.quantity + liquid_in_millilitres
+        if value > self.capacity:
+            self.quantity = self.capacity
+            overflow = float(value - self.capacity)
         else:
-            self.millilitres = liquid_in_millilitres
+            self.quantity = value
 
         return overflow

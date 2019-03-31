@@ -52,6 +52,7 @@ class Tower:
     def __init__(self):
         """Initialize tower"""
         self._graph = networkx.DiGraph()
+        self.overflow = 0.0
 
     @property
     def count(self):
@@ -215,11 +216,42 @@ class Tower:
         except networkx.NetworkXError as error:
             raise ValueError(str(error))
 
+    def drain(self):
+        """
+        Drain all the liquid from the glasses in the tower.
+        """
+        self.overflow = 0.0
+        for glass in self.glasses:
+            glass.millilitres = 0.0
+
     def fill(self, liquid_in_millilitres):
         """
         Pour the given amount of liquid (millilitres) over the tower.
 
         Args:
             liquid_in_millilitres (int or float): Liquid (millilitres)
+
+        Returns:
+            float: The remaining overflow.
         """
-        raise NotImplementedError("This method is not currently supported")
+        self.drain()
+        glass = self.glasses[0]
+        self._fill(glass, liquid_in_millilitres)
+        return self.overflow
+
+    def _fill(self, glass, liquid_in_millilitres):
+        """
+        Pour the given amount of liquid (millilitres) into the given glass.
+
+        Args:
+            glass (Glass): A glass in the tower.
+            liquid_in_millilitres (int or float): Liquid (millilitres)
+        """
+        remainder = glass.fill(liquid_in_millilitres)
+        div = remainder / 2.0
+        children = list(self.get_children(glass))
+        if children:
+            for child in children:
+                self._fill(child, div)
+        else:
+            self.overflow += remainder

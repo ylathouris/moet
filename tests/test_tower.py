@@ -197,23 +197,138 @@ def test_get_edges__for_nonexistent_glass__raises_value_error():
         tower.get_children("Z")
 
 
-@given(
-    rows=integers(min_value=4, max_value=6),
-    litres=integers(min_value=0, max_value=5000),
-)
-def test_fill_tower__with_valid__returns_expected_liquid_in_glasses(rows, litres):
+def test_fill_tower__250_millilitres__returns_expected_liquid_in_glasses():
     """
-    Test pouring liquid into a tower of glasses.
-
-    This test demonstrates how to pour liquid into a tower of
-    glasses. In this scenario, we're only using valid amounts of
-    liquid. The test then verifies that the amount of liquid in each
-    glass is as expected.
-
-    Args:
-        rows (int): The number of rows in the tower.
-        litres (int): The amount of liquid to be poured.
+    Test pouring 250 millilitres of liquid into a tower of glasses.
     """
-    with pytest.raises(NotImplementedError):
-        tower = moet.create_tower(rows)
-        tower.fill(litres)
+    tower = moet.create_tower(rows=4)
+
+    overflow = tower.fill(250)
+    assert not overflow
+    assert tower.get_glass("A").quantity == 250.0
+    assert set(gls.quantity for gls in tower.glasses[1:]) == set([0.0])
+
+
+def test_fill_tower__500_millilitres__returns_expected_liquid_in_glasses():
+    """
+    Test pouring 500 millilitres of liquid into a tower of glasses.
+    """
+    tower = moet.create_tower(rows=4)
+
+    overflow = tower.fill(500)
+    assert not overflow
+    assert tower.get_glass("A").quantity == 250.0
+    assert tower.get_glass("B").quantity == 125.0
+    assert tower.get_glass("C").quantity == 125.0
+    assert set(gls.quantity for gls in tower.glasses[3:]) == set([0.0])
+
+
+def test_fill_tower__750_millilitres__returns_expected_liquid_in_glasses():
+    """
+    Test pouring 750 millilitres of liquid into a tower of glasses.
+    """
+    tower = moet.create_tower(rows=4)
+
+    overflow = tower.fill(750)
+    assert not overflow
+    assert tower.get_glass("A").quantity == 250.0
+    assert tower.get_glass("B").quantity == 250.0
+    assert tower.get_glass("C").quantity == 250.0
+    assert set(gls.quantity for gls in tower.glasses[3:]) == set([0.0])
+
+
+def test_fill_tower__1000_millilitres__returns_expected_liquid_in_glasses():
+    """
+    Test pouring 1000 millilitres of liquid into a tower of glasses.
+    """
+    tower = moet.create_tower(rows=4)
+
+    overflow = tower.fill(1000)
+    assert not overflow
+    assert tower.get_glass("A").quantity == 250.0
+    assert tower.get_glass("B").quantity == 250.0
+    assert tower.get_glass("C").quantity == 250.0
+    assert tower.get_glass("D").quantity == 62.5
+    assert tower.get_glass("E").quantity == 125.0
+    assert tower.get_glass("F").quantity == 62.5
+    assert set(gls.quantity for gls in tower.glasses[6:]) == set([0.0])
+
+
+def test_fill_tower__1500_millilitres__returns_expected_liquid_in_glasses():
+    """
+    Test pouring 1500 millilitres of liquid into a tower of glasses.
+    """
+    tower = moet.create_tower(rows=4)
+
+    overflow = tower.fill(1500)
+    assert not overflow
+    assert tower.get_glass("A").quantity == 250.0
+    assert tower.get_glass("B").quantity == 250.0
+    assert tower.get_glass("C").quantity == 250.0
+    assert tower.get_glass("D").quantity == 187.5
+    assert tower.get_glass("E").quantity == 250.0
+    assert tower.get_glass("F").quantity == 187.5
+    assert tower.get_glass("G").quantity == 0.0
+    assert tower.get_glass("H").quantity == 62.5
+    assert tower.get_glass("I").quantity == 62.5
+    assert tower.get_glass("J").quantity == 0.0
+
+
+def test_fill_tower__2500_millilitres__returns_expected_liquid_in_glasses():
+    """
+    Test pouring 2500 millilitres of liquid into a tower of glasses.
+    """
+    tower = moet.create_tower(rows=4)
+
+    overflow = tower.fill(2500)
+    assert overflow == 312.5
+    assert tower.get_glass("A").quantity == 250.0
+    assert tower.get_glass("B").quantity == 250.0
+    assert tower.get_glass("C").quantity == 250.0
+    assert tower.get_glass("D").quantity == 250.0
+    assert tower.get_glass("E").quantity == 250.0
+    assert tower.get_glass("F").quantity == 250.0
+    assert tower.get_glass("G").quantity == 93.75
+    assert tower.get_glass("H").quantity == 250.0
+    assert tower.get_glass("I").quantity == 250.0
+    assert tower.get_glass("J").quantity == 93.75
+
+
+def test_fill_tower__3500_millilitres__returns_expected_liquid_in_glasses():
+    """
+    Test pouring 3500 millilitres of liquid into a tower of glasses.
+    """
+    tower = moet.create_tower(rows=4)
+
+    overflow = tower.fill(3500)
+    assert overflow == 1062.5
+    assert tower.get_glass("A").quantity == 250.0
+    assert tower.get_glass("B").quantity == 250.0
+    assert tower.get_glass("C").quantity == 250.0
+    assert tower.get_glass("D").quantity == 250.0
+    assert tower.get_glass("E").quantity == 250.0
+    assert tower.get_glass("F").quantity == 250.0
+    assert tower.get_glass("G").quantity == 218.75
+    assert tower.get_glass("H").quantity == 250.0
+    assert tower.get_glass("I").quantity == 250.0
+    assert tower.get_glass("J").quantity == 218.75
+
+
+def test_fill_tower__3750_millilitres__returns_expected_liquid_in_glasses():
+    """
+    Test pouring 3750 millilitres of liquid into a tower of glasses.
+    """
+    tower = moet.create_tower(rows=4)
+
+    overflow = tower.fill(3750)
+    assert overflow == 1250.0
+    assert tower.get_glass("A").quantity == 250.0
+    assert tower.get_glass("B").quantity == 250.0
+    assert tower.get_glass("C").quantity == 250.0
+    assert tower.get_glass("D").quantity == 250.0
+    assert tower.get_glass("E").quantity == 250.0
+    assert tower.get_glass("F").quantity == 250.0
+    assert tower.get_glass("G").quantity == 250.0
+    assert tower.get_glass("H").quantity == 250.0
+    assert tower.get_glass("I").quantity == 250.0
+    assert tower.get_glass("J").quantity == 250.0

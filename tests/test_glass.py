@@ -54,11 +54,9 @@ def test_fill_glass__with_no_overflow__returns_expected(number):
         number (int or float): The number of millilitres to fill the glass with.
     """
     glass = moet.create_glass("A")
-    print(number, glass.millilitres)
     overflow = glass.fill(number)
-    print(number, overflow, glass.millilitres)
     assert not overflow
-    assert glass.millilitres == number
+    assert glass.quantity == number
 
 
 @given(integers(min_value=250, max_value=500))
@@ -75,7 +73,7 @@ def test_fill_glass__with_overflow__returns_expected(number):
     glass = moet.create_glass("A")
     overflow = glass.fill(number)
     assert overflow == number - 250
-    assert glass.millilitres == 250
+    assert glass.quantity == 250
 
 
 def test_glass_capacity__has_expected_default_value():
@@ -119,4 +117,4 @@ def test_set_glass_millilitres__with_negative_number__raises_value_error():
     """
     glass = moet.create_glass("A")
     with pytest.raises(ValueError):
-        glass.millilitres = -100
+        glass.quantity = -100
