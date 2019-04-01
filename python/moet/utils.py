@@ -6,6 +6,7 @@ This module contains moet utility functions.
 
 import math
 import string
+import pkg_resources
 
 
 ALPHABET = string.ascii_uppercase
@@ -29,6 +30,16 @@ def get_id(number):
         return str(number)
     else:
         return ALPHABET[number]
+
+
+def get_version():
+    """
+    Get the current version of moet.
+
+    Returns:
+        str: moet version
+    """
+    return pkg_resources.get_distribution("moet").version
 
 
 def get_triangular_value(number):
@@ -92,3 +103,16 @@ def is_triangular(number):
         return value == number
 
     return False
+
+
+def to_integer(value):
+    """
+    Cast the given float to an integer if it is a whole number.
+
+    Args:
+        value (float): Floating point number.
+
+    Returns:
+        float or int: Value cast as integer if possible.
+    """
+    return int(value) if value.is_integer() else value

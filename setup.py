@@ -34,5 +34,10 @@ setup(
     },
     package_dir={"": src},
     packages=find_packages(src),
+    entry_points={
+        'console_scripts': [
+            'moet = moet.cli:moet',
+        ],
+    },
     install_requires=[],
 )

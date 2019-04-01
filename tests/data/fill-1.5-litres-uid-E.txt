@@ -1,0 +1,13 @@
+moet (version: 0.1.0)
+
+Pouring 1.5 litres of champagne over the tower:
+
+       (A)
+       / \ 
+     (B) (C)
+     / \ / \ 
+   (D) (E) (F)   <-- Glass (E), at position (2, 1), contains 187.5 millilitres of champagne.
+   / \ / \ / \ 
+ (G) (H) (I) (J)
+
+

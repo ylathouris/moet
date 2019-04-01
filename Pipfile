@@ -13,6 +13,7 @@ moet = {editable = true,path = "."}
 
 [packages]
 networkx = "*"
+structlog = "*"
 
 [requires]
 python_version = "3.7"

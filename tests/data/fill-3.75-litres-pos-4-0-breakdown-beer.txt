@@ -1,0 +1,28 @@
+moet (version: 0.1.0)
+
+Pouring 3.75 litres of beer over the tower:
+
+       (A)
+       / \ 
+     (B) (C)
+     / \ / \ 
+   (D) (E) (F)
+   / \ / \ / \ 
+ (G) (H) (I) (J)
+
+
+Breakdown:
+
+id=(A) position=(0, 0) quantity=250
+id=(B) position=(1, 0) quantity=250
+id=(C) position=(1, 1) quantity=250
+id=(D) position=(2, 0) quantity=250
+id=(E) position=(2, 1) quantity=250
+id=(F) position=(2, 2) quantity=250
+id=(G) position=(3, 0) quantity=250
+id=(H) position=(3, 1) quantity=250
+id=(I) position=(3, 2) quantity=250
+id=(J) position=(3, 3) quantity=250
+
+Overflow: 1250.0
+
