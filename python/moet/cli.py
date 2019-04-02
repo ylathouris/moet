@@ -47,13 +47,6 @@ def moet(rows, fill, uid, position, liquid, breakdown):
     """
     Build a tower of glasses. Fill them with champagne!
 
-    Args:
-        rows (int): The number of rows to build.
-        fill (int): The amount of liquid to pour over the tower (litres)
-        uid (str): The ID of the glass to select/highlight.
-        position (tuple): The position of the glass to select/highlight.
-        liquid (str): The type of liquid used.
-        breakdown (bool): If true, show a breakdown of each glass.
     """
     version = utils.get_version()
     click.echo(f"moet (version: {version})\n")
