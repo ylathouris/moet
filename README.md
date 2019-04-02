@@ -16,6 +16,7 @@ Moet is a programming exercise for the **Water Overflow Problem**.
 * [Running The Tests](#testing)
 * [Starting A Shell](#moet.shell)
 * [Command Line Interface (CLI)](#moet.cli)
+* [Application Programming Interface (API)](#moet.api)
 
 <br/>
 
@@ -159,6 +160,36 @@ You can show a breakdown of the liquid in each glass using the
 ```bash
 $ moet --fill 3.75 --position 4 0 --breakdown
 ```
+
+<br/>
+
+### <a name="moet.api"></a>Application Programming Interface (API)
+
+There is also a Python API you can use. Here is an example:
+
+```python
+import moet
+
+# Create a tower with 4 rows of glasses. 
+tower = moet.create_tower(rows=4)
+
+# Get the rows in the tower.
+rows = tower.get_rows()
+
+# Iterate over the rows:
+for glasses in rows:
+    for glass in glasses:
+        print(">", glass.uid, glass.position, glass.quantity)
+
+# Get a specific glass.
+glass = tower.get_glass("E")
+
+# Get the parents for that glass.
+parents = tower.get_parents(glass)
+
+# Get the children for that glass.
+children = tower.get_children(glass)
+```  
 
 
 [Problem]: docs/images/problem.png
