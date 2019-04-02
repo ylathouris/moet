@@ -28,7 +28,7 @@ are as follows:
 * An internet connection
 * [git] installed on your machine (used to clone the source code)
 * [tox] installed on your machine (used to run the tests)
-* [pipenv] installed on your machine (used to manage runtime environment)
+* Python 3.5 or higher installed on your machine
 
 <br/>
 
