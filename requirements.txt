@@ -1,0 +1,4 @@
+Click==7.0
+decorator==4.4.0
+moet==0.1.0
+networkx==2.2

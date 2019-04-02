@@ -40,7 +40,16 @@ way to install it is to clone the source code directly.
 
 ```bash
 $ git clone https://github.com/ylathouris/moet
+$ cd moet
 ```
+
+Once you're in the root directory of the moet repository you can run 
+the installer script. This will create a virtual environment and install 
+moet's dependencies into that environment.
+
+```bash
+$ ./install.sh
+``` 
 
 <br/>
 
@@ -67,8 +76,16 @@ is a bootstrap to help with this. Simply run the following command
 from the package root:
 
 ```bash
-$ ./shell
+$ source .venv/bin/activate
 ``` 
+
+All this does is put you inside the virtual environment that was 
+created during the installation process. To get out of the shell, 
+run 
+
+```bash
+deactivate
+```
 
 
 <br/>
